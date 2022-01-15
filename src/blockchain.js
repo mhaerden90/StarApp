@@ -132,13 +132,15 @@ class Blockchain {
            let currentTime = parseInt(new Date().getTime().toString().slice(0, -3));
            if (time - currentTime < 300) {
                if(!bitcoinMessage.verify(message, address, signature)){
-                   return reject('Bitcoin Message unverified')
+                 reject('Bitcoin Message unverified')
                }
             const data = {"owner": address, "star": star};
             const block = new BlockClass.Block(data);
             resolve(await self._addBlock(block));
            }
-           return reject(new Error('Block must be added in five minutes'));
+           else {
+                reject(new Error('Block must be added in five minutes'));
+            }
         });
     }
 
